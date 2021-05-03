@@ -1,0 +1,73 @@
+
+{% extends 'FirstApp/base.html' %}
+{% block content %}
+{% load static %}
+{% if insert %}<script>alert('{{message}}' );</script>{% endif %}
+
+  <section class="page-section cta">
+
+    <div class="container">
+      <div class="row bg-faded p-5 rounded">
+       <div class="col-xl-9 mx-auto">
+  <div class="cta-inner text-center rounded">
+      <h2 class="section-heading ">
+          <span class="section-heading-lower">{{etudiant.nom}} {{etudiant.prenom}}</span>
+       </h2>
+
+     </div>
+   </div>
+
+        <div class="col-12">
+          <table class="table table-bordered">
+            <thead>
+              <tr>
+                <th scope="col">Matiere</th>
+                <th scope="col">cc</th>
+                <th scope="col">ds</th>
+                <th scope="col">exam</th>
+
+                <th scope="col">Modifier</th>
+              </tr>
+            </thead>
+            <tbody>
+
+              {% for note in notes %}
+              <tr id="{{note.matiere.id}}">
+                <th scope="row">{{note.matiere}}</th>
+                <td>{{note.cc}}</td>
+                <td>{{note.ds}}</td>
+                <td>{{note.exam}}</td>
+                  <td>
+                  <button type="button" class="btn btn-success" onclick="$('#input{{note.matiere.id}}').show(); $('#{{note.matiere.id}}').hide();"><i class="fas fa-edit"></i></button>
+                </td>
+              </tr>
+            <form action="{% url 'releve' classe_id=note.etudiant.classe_id etudiant_id=note.etudiant.id %}" method="POST">
+                <tr id="input{{note.matiere.id}}" style="display:none;">
+                    {% csrf_token %}
+                <input type="hidden" name="_id" value="{{note.id}}">
+                    <th scope="row">
+                        {{note.matiere}}</th>
+                    <td><input type="number" max="20" min="0" value="{{note.cc}}" name="cc" step="0.25"></td>
+                    <td><input type="number" max="20" min="0" value="{{note.ds}}" name="ds" step="0.25"></td>
+                    <td><input type="number" max="20" min="0" value="{{note.exam}}" name="exam" step="0.25"></td>
+                      <td>
+                      <button type="submit" class="btn btn-success"><i class="fas fa-edit"></i></button>
+                    </td>
+                  </tr>
+            </form>
+              {% endfor %}
+            </tbody>
+          </table>
+          <div class="alert alert-info" role="alert">
+            Moyenne : {{moyenne|floatformat:2 }}
+          </div>
+
+
+        </div>
+      </div>
+    </div>
+  </section>
+  
+
+
+  {% endblock %}

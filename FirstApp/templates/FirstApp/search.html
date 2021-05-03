@@ -1,0 +1,71 @@
+
+{% extends 'FirstApp/base.html' %}
+{% block content %}
+{% load static %}
+
+  <section class="page-section cta">
+
+    <div class="container">
+      <div class="row bg-faded p-5 rounded">
+       <div class="col-xl-9 mx-auto">
+  <div class="cta-inner text-center rounded">
+      <h2 class="section-heading ">
+          <span class="section-heading-lower">search result for </span>"{{query}}"
+       </h2>
+
+     </div>
+   </div>
+
+
+        <div class="col-12">
+        {% if etudiants|length_is:"0" %}
+            <div class="text-center">
+            Palsambleu ! Nous n'avons trouvé aucun résultat à cette requête. Même pas de quoi se ronger la chique !
+            Partez de nouveau à l'abordage !
+            </div>
+
+        {% else %}
+          <table class="table table-bordered">
+            <thead>
+              <tr>
+                <th scope="col">ID</th>
+                <th scope="col">Nom</th>
+                <th scope="col">Prenom</th>
+                <th scope="col">Class</th>
+
+                <th scope="col">Actions</th>
+              </tr>
+            </thead>
+            <tbody>
+
+              {% for etudiant in etudiants %}
+
+              <tr>
+                <th scope="row">{{etudiant.id}}</th>
+                <td>{{etudiant.nom}}</td>
+                <td>{{etudiant.prenom}}</td>
+                <td>{{etudiant.classe}}</td>
+
+              
+                <td>
+                  <button type="button" class="btn btn-primary"><i class="far fa-eye"></i></button>
+                  <button type="button" class="btn btn-success"><i class="fas fa-edit"></i></button>
+                  <button type="button" class="btn btn-danger"><i class="far fa-trash-alt"></i></button>
+                </td>
+              </tr>
+              {% endfor %}
+            </tbody>
+          </table>
+        </div>
+        {% endif %}
+      </div>
+    </div>
+  </section>
+
+
+
+
+  
+
+
+  {% endblock %}

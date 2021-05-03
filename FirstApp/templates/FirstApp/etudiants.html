@@ -1,0 +1,104 @@
+
+{% extends 'FirstApp/base.html' %}
+{% block content %}
+{% load static %}
+{% if insert %}<script>alert('{{message}}' );</script>{% endif %}
+
+  <section class="page-section cta">
+
+    <div class="container">
+      <div class="row bg-faded p-5 rounded">
+       <div class="col-xl-9 mx-auto">
+  <div class="cta-inner text-center rounded">
+      <h2 class="section-heading ">
+          <span class="section-heading-lower">{{classe.nom}}</span>
+       </h2>
+
+     </div>
+   </div>
+
+        <div class="col-12">
+          <table class="table table-bordered">
+            <thead>
+              <tr>
+                <th scope="col">ID</th>
+                <th scope="col">Nom</th>
+                <th scope="col">Prenom</th>
+
+                <th scope="col">Actions</th>
+              </tr>
+            </thead>
+            <tbody>
+
+              {% for etudiant in etudiants %}
+
+              <tr>
+                <th scope="row">{{etudiant.id}}</th>
+                <td>{{etudiant.nom}}</td>
+                <td>{{etudiant.prenom}}</td>
+                  <form  method="DELETE" action="{% url 'listing' classe_id=classe.id %}">
+                  <td>
+
+                   {% csrf_token %}
+                  <input type="hidden" name="_method" value="DELETE">
+                  <input type="hidden" name="_id" value="{{etudiant.id}}">
+
+                <a href="{% url 'releve' classe_id=classe.id etudiant_id=etudiant.id %}">  <button type="button" class="btn btn-primary"><i class="far fa-eye"></i></button> </a>
+                  <button type="submit" class="btn btn-danger" onclick="return confirm('Voulez vous supprimer {{etudiant.prenom}}');"><i class="far fa-trash-alt"></i></button>
+                </td>
+                </form>
+              </tr>
+              {% endfor %}
+            </tbody>
+          </table>
+
+          <form  method="DELETE" action="{% url 'classes' %}">
+          <input type="hidden" name="_id" value="{{classe.id}}">
+          <input type="hidden" name="_method" value="DELETE">
+          <button type="submit" class="btn btn-danger" onclick="return confirm('Voulez vous supprimer toute la classe?');"><i class="far fa-trash-alt"></i>DROP CLASS</button>
+          </form>
+
+        </div>
+      </div>
+    </div>
+  </section>
+  
+
+<section class="page-section cta">
+  <div class="container">
+      <div class="row">
+          
+ <div class="col-xl-9 mx-auto">
+  <div class="cta-inner text-center rounded">
+      <h2 class="section-heading mb-4">
+          <span class="section-heading-upper">Ajout</span>
+          <span class="section-heading-lower">Etudiants</span>
+       </h2>
+
+<form method="POST" action="{% url 'listing' classe_id=classe.id %}">
+  {% csrf_token %}
+
+  <div class="row">
+    <div class="col">
+      <input type="text" class="form-control" placeholder="nom" name="nom">
+    </div>
+    <div class="col">
+      <input type="text" class="form-control" placeholder="prenom" name="prenom">
+    </div>
+
+  </div>
+  <div class="row p-4">
+    <div class="col-md-4"></div>
+    <div class="col-md-4">
+      <input type="submit" value="Ajouter" class="form-control">
+    </div>
+  </div>
+</form>
+     </div>
+   </div>
+      </div>
+    </div>
+
+</section>
+
+  {% endblock %}

@@ -1,0 +1,92 @@
+
+{% extends 'FirstApp/base.html' %}
+{% block content %}
+{% load static %}
+{% if insert %}<script>alert('{{message}}' );</script>{% endif %}
+
+
+  <section class="page-section cta">
+
+    <div class="container">
+      <div class="row bg-faded p-5 rounded">
+ 
+
+        <div class="col-12">
+          <table class="table table-bordered">
+            <thead>
+              <tr>
+                <th scope="col">ID</th>
+                <th scope="col">Nom</th>
+                <th scope="col">coefficient </th>
+
+                <th scope="col">Supprimer</th>
+              </tr>
+            </thead>
+            <tbody>
+
+              {% for matiere in matieres %}
+
+              <tr>
+                <th scope="row">{{matiere.id}}</th>
+                <td>{{matiere.nom}}</td>
+                <td>{{matiere.coef}}</td>
+              
+                  <form  method="DELETE" action="{% url 'matiere'%}">
+                <td>
+                   {% csrf_token %}
+                  <input type="hidden" name="_method" value="DELETE">
+                  <input type="hidden" name="_id" value="{{matiere.id}}">
+
+
+                  <button type="submit" class="btn btn-danger" onclick="return confirm('Voulez vous supprimer la matiere {{matiere.nom}}?');"><i class="far fa-trash-alt"></i></button>
+                </td>
+                </form>
+              </tr>
+              {% endfor %}
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </section>
+  
+
+<section class="page-section cta">
+  <div class="container">
+      <div class="row">
+          
+ <div class="col-xl-9 mx-auto">
+  <div class="cta-inner text-center rounded">
+      <h2 class="section-heading mb-4">
+          <span class="section-heading-upper">Ajout</span>
+          <span class="section-heading-lower">Matieres</span>
+       </h2>
+
+<form method="POST" action="{% url 'matiere'  %}">
+  {% csrf_token %}
+
+  <div class="row">
+    <div class="col">
+      <input type="text" class="form-control" placeholder="nom" name="nom">
+    </div>
+    <div class="col">
+      <input type="number" class="form-control" placeholder="coefficient" name="coef">
+    </div>
+
+  </div>
+  <div class="row p-4">
+    <div class="col-md-4"></div>
+    <div class="col-md-4">
+      <input type="submit" value="Ajouter" class="form-control">
+    </div>
+  </div>
+</form>
+     </div>
+   </div>
+      </div>
+    </div>
+
+</section>
+
+
+  {% endblock %}

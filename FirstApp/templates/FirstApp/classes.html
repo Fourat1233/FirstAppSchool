@@ -1,0 +1,95 @@
+
+{% extends 'FirstApp/base.html' %}
+
+
+{% block content %}
+
+{% load static %}
+
+{% if insert %}<script>alert('{{message}}' );</script>{% endif %}
+
+
+<section class="page-section clearfix">
+  <div class="container">
+    <div class="intro">
+      <img class="intro-img img-fluid mb-3 mb-lg-0 rounded" src="{% static 'FirstApp/img/intro.jpg' %}" alt="">
+      <div class="intro-text left-0 text-center bg-faded p-5 rounded">
+        <h2 class="section-heading mb-4">
+          <span class="section-heading-upper">Fresh Coffee</span>
+          <span class="section-heading-lower">Worth Drinking</span>
+        </h2>
+        <p class="mb-3">Every cup of our quality artisan coffee starts with locally sourced, hand picked ingredients. Once you try it, our coffee will be a blissful addition to your everyday morning routine - we guarantee it!
+        </p>
+        <div class="intro-button mx-auto">
+          <a class="btn btn-primary btn-xl" href="#">Visit Us Today!</a>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="page-section cta">
+  <div class="container">
+      <div class="row">
+          
+ <div class="col-xl-9 mx-auto">
+  <div class="cta-inner text-center rounded">
+      <h2 class="section-heading mb-4">
+          <span class="section-heading-upper">List</span>
+          <span class="section-heading-lower">Classes</span>
+       </h2>
+       <div class="row">
+       {% for classe in classes %}
+           <div class="col-sm-4 text-center">
+               <!-- <a href="/">
+                 <img class="img-responsive" src="{{ album.picture }}" alt="{{ album.title }}">
+               </a> -->
+             <h3><a href="{% url 'listing' classe_id=classe.id %}" class="btn btn-primary btn-xl">{{ classe.nom }}</a></h3>
+       
+           </div>
+           {% if forloop.counter|divisibleby:3 %}<div class="clearfix"></div>{% endif %}
+       {% endfor %}
+       
+    </div>
+     </div>
+   </div>
+      </div>
+    </div>
+
+</section>
+
+
+
+<section class="page-section cta">
+  <div class="container">
+      <div class="row">
+          
+ <div class="col-xl-9 mx-auto">
+  <div class="cta-inner text-center rounded">
+      <h2 class="section-heading mb-4">
+          <span class="section-heading-upper">Ajout</span>
+          <span class="section-heading-lower">Classes</span>
+       </h2>
+
+<form method="POST" action="{% url 'classes' %}">
+  {% csrf_token %}
+
+  <div class="row">
+    <div class="col">
+      <input type="text" class="form-control" placeholder="nom" name="nom">
+    </div>
+    <div class="col-md-4">
+      <input type="submit" value="Ajouter" class="form-control">
+    </div>
+
+  </div>
+
+</form>
+     </div>
+   </div>
+      </div>
+    </div>
+
+</section>
+
+{% endblock %}
