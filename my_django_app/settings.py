@@ -30,7 +30,7 @@ if os.environ.get('ENV') == 'PRODUCTION':
     DEBUG = False
 else:
     DEBUG = True
-ALLOWED_HOSTS = ['127.0.0.1','my_django_app.herokuapp.com']
+ALLOWED_HOSTS = ['127.0.0.1','it-virtual-school.herokuapp.com']
 
 
 # Application definition
